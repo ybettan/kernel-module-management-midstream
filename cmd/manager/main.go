@@ -42,6 +42,7 @@ import (
 	// to ensure that exec-entrypoint and run can make use of them.
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
+	"github.com/rh-ecosystem-edge/kernel-module-management/api/v1beta1"
 	kmmv1beta1 "github.com/rh-ecosystem-edge/kernel-module-management/api/v1beta1"
 	"github.com/rh-ecosystem-edge/kernel-module-management/controllers"
 	"github.com/rh-ecosystem-edge/kernel-module-management/internal/auth"
@@ -220,6 +221,10 @@ func main() {
 		scheme).SetupWithManager(mgr); err != nil {
 		setupLogger.Error(err, "unable to create controller", "controller", "PreflightOCP")
 		os.Exit(1)
+	}
+
+	if err = (&v1beta1.Module{}).SetupWebhookWithManager(mgr); err != nil {
+		cmd.FatalError(setupLogger, err, "unable to create webhook", "webhook", "Module")
 	}
 
 	//+kubebuilder:scaffold:builder
