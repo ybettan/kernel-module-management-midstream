@@ -197,6 +197,8 @@ KUSTOMIZE_CONFIG_HUB_DEFAULT ?= config/default-hub
 
 .PHONY: deploy
 deploy: manifests kustomize ## Deploy controller to the K8s cluster specified in ~/.kube/config.
+	oc apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
+	sleep 20
 	cd config/manager && $(KUSTOMIZE) edit set image controller=$(IMG)
 	oc apply -k $(KUSTOMIZE_CONFIG_DEFAULT)
 
@@ -208,6 +210,7 @@ deploy-hub: manifests kustomize ## Deploy controller to the K8s cluster specifie
 .PHONY: undeploy
 undeploy: ## Undeploy controller from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
 	oc delete -k $(KUSTOMIZE_CONFIG_DEFAULT) --ignore-not-found=$(ignore-not-found)
+	oc delete -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.yaml
 
 .PHONY: undeploy-hub
 undeploy-hub: ## Undeploy controller from the K8s cluster specified in ~/.kube/config. Call with ignore-not-found=true to ignore resource not found errors during deletion.
