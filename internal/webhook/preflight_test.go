@@ -10,8 +10,8 @@ import (
 
 var _ = Describe("validatePreflight", func() {
 	It("should fail with invalid kernel version", func() {
-		pv := &kmmv1beta2.PreflightValidation{
-			Spec: kmmv1beta2.PreflightValidationSpec{
+		pv := &kmmv1beta2.PreflightValidationOCP{
+			Spec: kmmv1beta2.PreflightValidationOCPSpec{
 				KernelVersion: "test",
 			},
 		}
@@ -20,8 +20,8 @@ var _ = Describe("validatePreflight", func() {
 	})
 
 	It("should pass with valid kernel version", func() {
-		pv := &kmmv1beta2.PreflightValidation{
-			Spec: kmmv1beta2.PreflightValidationSpec{
+		pv := &kmmv1beta2.PreflightValidationOCP{
+			Spec: kmmv1beta2.PreflightValidationOCPSpec{
 				KernelVersion: "6.0.15-300.fc37.x86_64",
 			},
 		}
