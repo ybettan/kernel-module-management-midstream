@@ -295,6 +295,11 @@ bundle: operator-sdk manifests kustomize ## Generate bundle manifests and metada
 
 	${OPERATOR_SDK} bundle validate ./bundle
 
+.PHONY: bundle-with-network-policy
+bundle-with-network-policy: bundle
+	cp config/network-policy/* bundle/manifests/
+	rm bundle/manifests/kustomization.yaml
+
 .PHONY: bundle-hub
 bundle-hub: operator-sdk manifests kustomize ## Generate bundle manifests and metadata, then validate generated files.
 	rm -fr bundle-hub
@@ -317,6 +322,11 @@ bundle-hub: operator-sdk manifests kustomize ## Generate bundle manifests and me
 	./hack/generate-bundle
 
 	${OPERATOR_SDK} bundle validate ./bundle-hub
+
+.PHONY: bundle-hub-with-network-policy
+bundle-hub-with-network-policy: bundle
+	cp config/network-policy/* bundle-hub/manifests/
+	rm bundle-hub/manifests/kustomization.yaml
 
 .PHONY: bundle-build-hub
 bundle-build-hub: ## Build the bundle-hub image.
