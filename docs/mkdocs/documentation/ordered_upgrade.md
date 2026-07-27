@@ -21,7 +21,7 @@ There are 2 type of workloads that can use a kernel module:
 - device plugin managed by KMM.
   The operator will manage the unloading/loading of the device plugin on a node being upgraded.
 
-Due to Kubernetes limitations in label names, the combined length of `Module` name and namespace may not exceed 39
+Due to Kubernetes limitations in label names, the combined length of `Module` name and namespace may not exceed 41
 characters.
 
 ## Upgrade steps
